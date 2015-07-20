@@ -6,8 +6,11 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import yocn.com.collection.utils.SystemBarTintManager;
 
@@ -26,7 +29,9 @@ public class ParabolaViewAct extends ActionBarActivity {
         tintManager.setNavigationBarTintEnabled(true);
         int color = Color.argb(255, 255, 0, 0);
         tintManager.setTintColor(color);
+
     }
+
 
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {

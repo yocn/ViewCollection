@@ -1,13 +1,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:elevation="4dp"
+        android:minHeight="50dp"
+        android:paddingTop="0dp"></android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:scrollbars="vertical" />
+<!--
     <LinearLayout
         android:id="@+id/ll_full"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_below="@id/rv_item"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/bt_ripple"
@@ -45,5 +61,5 @@
             android:layout_height="wrap_content"
             android:text="RecycleView" />
     </LinearLayout>
-
+-->
 </RelativeLayout>

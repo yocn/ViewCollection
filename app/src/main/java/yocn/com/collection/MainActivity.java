@@ -1,73 +1,88 @@
 package yocn.com.collection;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import yocn.com.collection.adapter.MainAdapter;
+import yocn.com.collection.utils.CustomItemAnimator;
+import yocn.com.collection.utils.ListBean;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
-    private Button bt_cv;
-    private Button bt_ripple;
-    private Button bt_bcv;
-    private Button bt_parabola;
-    private Button bt_path;
-    private Button bt_recycle_view;
+    private RecyclerView rv_item;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<ListBean> mListBeanList;
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new ArrayList<String>();
-        new ArrayList<String>(0);
-        bt_ripple = (Button) findViewById(R.id.bt_ripple);
-        bt_cv = (Button) findViewById(R.id.bt_cv);
-        bt_bcv = (Button) findViewById(R.id.bt_bcv);
-        bt_parabola = (Button) findViewById(R.id.bt_parabola);
-        bt_path = (Button) findViewById(R.id.bt_path);
-        bt_recycle_view = (Button) findViewById(R.id.bt_recycle_view);
-        bt_ripple.setOnClickListener(this);
-        bt_cv.setOnClickListener(this);
-        bt_bcv.setOnClickListener(this);
-        bt_parabola.setOnClickListener(this);
-        bt_path.setOnClickListener(this);
-        bt_recycle_view.setOnClickListener(this);
+        rv_item = (RecyclerView) findViewById(R.id.rv_item);
+        mLayoutManager = new LinearLayoutManager(this);
+        rv_item.setLayoutManager(mLayoutManager);
+        rv_item.setItemAnimator(new CustomItemAnimator());
+
+        mListBeanList = new ArrayList<>();
+        mListBeanList.add(new ListBean("RippleView", RippleViewActivity.class));
+        mListBeanList.add(new ListBean("ChartView", ChartViewAct.class));
+        mListBeanList.add(new ListBean("BarChartView", BarChartViewAct.class));
+        mListBeanList.add(new ListBean("ParabolaView", ParabolaViewAct.class));
+        mListBeanList.add(new ListBean("Path", PathActivity.class));
+        mListBeanList.add(new ListBean("RecycleView", RecycleViewAct.class));
+
+        MainAdapter adapter = new MainAdapter(this, mListBeanList);
+        adapter.setData(mListBeanList);
+        rv_item.setAdapter(adapter);
+        init();
+    }
+
+    private void init() {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        mToolbar.setLogo(R.drawable.ic_launcher);
+        mToolbar.setTitle("Simple");// 标题的文字需在setSupportActionBar之前，不然会无效
+// toolbar.setSubtitle("副标题");
+        setSupportActionBar(mToolbar);
+/* 这些通过ActionBar来设置也是一样的，注意要在setSupportActionBar(toolbar);之后，不然就报错了 */
+        getSupportActionBar().setTitle("Simple");
+        getSupportActionBar().setSubtitle("Simple");
+//        getSupportActionBar().setLogo(R.drawable.ic_launcher);
+
+/* 菜单的监听可以在toolbar里设置，也可以像ActionBar那样，通过Activity的onOptionsItemSelected回调方法来处理 */
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_settings:
+                        Toast.makeText(MainActivity.this, "action_settings", Toast.LENGTH_SHORT).show();
+                        break;
+//                    case R.id.action_share:
+//                        Toast.makeText(ParabolaViewAct.this, "action_share", Toast.LENGTH_SHORT).show();
+//                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-        case R.id.bt_ripple:
-            Intent i0 = new Intent(MainActivity.this, RippleViewActivity.class);
-            startActivity(i0);
-            break;
-        case R.id.bt_cv:
-            Intent i1 = new Intent(MainActivity.this, ChartViewAct.class);
-            startActivity(i1);
-            break;
-        case R.id.bt_bcv:
-            Intent i2 = new Intent(MainActivity.this, BarChartViewAct.class);
-            startActivity(i2);
-            break;
-        case R.id.bt_parabola:
-            Intent i3 = new Intent(MainActivity.this, ParabolaViewAct.class);
-            startActivity(i3);
-            break;
-        case R.id.bt_path:
-            Intent i4 = new Intent(MainActivity.this, PathActivity.class);
-            startActivity(i4);
-            break;
-        case R.id.bt_recycle_view:
-            Intent i5 = new Intent(MainActivity.this, RecycleViewAct.class);
-            startActivity(i5);
-            break;
         }
+
     }
 
 }
